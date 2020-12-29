@@ -1,5 +1,5 @@
 const colors = require('./colors');
-const { pickColor } = require('./mastermind')
+const { pickColor, generateCode } = require('./mastermind')
 
 describe('pickColor', () => {
     it('should take a randomfn and return a color based on that', () => {
@@ -27,3 +27,13 @@ describe('pickColor', () => {
         }).toThrow()
     })
 })
+ describe('generateCode', () => {
+     it('should return 4 colors based on the randomfunction', () => {
+        let count = 0; 
+        const fakeRandom = () => {
+                count += 1;
+                return (0.125-0.001) * count   
+         };
+         expect(generateCode(fakeRandom)).toEqual([colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE])
+        });
+ });
