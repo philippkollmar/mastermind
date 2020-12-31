@@ -1,5 +1,6 @@
 const colors = require('./colors');
-const { pickColor, generateCode } = require('./mastermind')
+const { pickColor, generateCode, checkCode } = require('./mastermind');
+const hint = require("./hint");
 
 describe('pickColor', () => {
     it('should take a randomfn and return a color based on that', () => {
@@ -36,4 +37,19 @@ describe('pickColor', () => {
          };
          expect(generateCode(fakeRandom)).toEqual([colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE])
         });
+ });
+ describe('chekCode', () => {
+    it('should turn code and guess into hints when all colors diverge', () => {
+        expect(checkCode(
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            [colors.PURPLE, colors.ORANGE, colors.PINK, colors.BROWN]
+        )).toEqual([hint.NOT_AT_ALL, hint.NOT_AT_ALL, hint.NOT_AT_ALL, hint.NOT_AT_ALL])
+    })
+
+    it('should turn code and guess into hints when all colors are equal', () => {
+        expect(checkCode(
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE]
+        )).toEqual([hint.FITS, hint.FITS, hint.FITS, hint.FITS])
+    })
  });

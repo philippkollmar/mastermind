@@ -1,4 +1,5 @@
 const colors = require("./colors")
+const hint = require("./hint")
 
 const pickColor = (randomFn) => {
     const randomValue = randomFn();
@@ -29,6 +30,19 @@ const generateCode = (randomFn) => {
     })
 }
 
+const checkCode = (code, guess) => {
+    const result = []
+    code.forEach((color, index) => {
+        if (color === guess[index]){
+            result.push(hint.FITS)
+        }
+        else {
+            result.push(hint.NOT_AT_ALL)
+        }
+    })
+    return result
+}
+
 module.exports = {
-    pickColor, generateCode
+    pickColor, generateCode, checkCode
 }
