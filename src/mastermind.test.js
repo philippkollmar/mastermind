@@ -1,6 +1,7 @@
 const colors = require('./colors');
-const { pickColor, generateCode, checkCode } = require('./mastermind');
+const { pickColor, generateCode, checkCode, checkGame } = require('./mastermind');
 const hint = require("./hint");
+const game = require("./game");
 
 describe('pickColor', () => {
     it('should take a randomfn and return a color based on that', () => {
@@ -111,3 +112,58 @@ describe('chekCode', () => {
         )).toContain(hint.FITS, hint.PARTIALLY, hint.NOT_AT_ALL)
     })
 });
+
+describe('checkGame', () => {
+    it('should return WON on normal run in under 12 rounds', () => {
+        let fakeRounds = 1
+        expect(checkGame(checkCode(
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            (_) => { }),
+            fakeRounds
+        )).toEqual(game.WON)
+    });
+
+    it("should return LOST when something doesnt fit after round 12", () => {
+        let fakeRounds = 12
+        expect(checkGame(checkCode(
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            [colors.RED, colors.YELLOW, colors.BROWN, colors.GREEN],
+            (_) => { }),
+            fakeRounds
+        )).toEqual(game.LOST)
+    });
+
+    it("should return LOST when NOTHING fits after round 12", () => {
+        let fakeRounds = 12
+        expect(checkGame(checkCode(
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            [colors.ORANGE, colors.BROWN, colors.PINK, colors.PURPLE],
+            (_) => { }),
+            fakeRounds
+        )).toEqual(game.LOST)
+    });
+
+    it("should return LOST when everything ist PARTIALLY after round 12", () => {
+        let fakeRounds = 12
+        expect(checkGame(checkCode(
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            [colors.GREEN, colors.RED, colors.BLUE, colors.YELLOW],
+            (_) => { }),
+            fakeRounds
+        )).toEqual(game.LOST)
+    });
+
+    it("should return PENDING when round is under 12 and something doesnt fit", () => {
+        let fakeRounds = 5
+        expect(checkGame(checkCode(
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            [colors.RED, colors.YELLOW, colors.BROWN, colors.GREEN],
+            (_) => { }),
+            fakeRounds
+        )).toEqual(game.PENDING)
+    });
+
+
+
+}) 
