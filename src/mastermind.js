@@ -30,8 +30,9 @@ const generateCode = (randomFn) => {
     })
 }
 
-const checkCode = (code, guess) => {
+const checkCode = (code, guess, randomFn) => {
     const result = []
+    let randomValue = randomFn();
     guess.forEach((color, index) => {
         if (color === code[index]) {
             result.push(hint.FITS)
@@ -42,10 +43,41 @@ const checkCode = (code, guess) => {
         else {
             result.push(hint.NOT_AT_ALL)
         }
-    })
-    console.log(result)
-    return result
+    });
+
+    if (randomValue > 0) {
+        let resultcopy = result.slice();
+        if(randomValue <= 1) {
+            resultcopy[0] =  result[1]
+            resultcopy[1] =  result[3]
+            resultcopy[2] =  result[2]
+            resultcopy[3] =  result[0]
+        }
+        else if(randomValue <= 2) {
+            resultcopy[0] =  result[0]
+            resultcopy[1] =  result[2]
+            resultcopy[2] =  result[3]
+            resultcopy[3] =  result[1]
+        }
+        else if(randomValue <= 3){
+            resultcopy[0] =  result[1]
+            resultcopy[1] =  result[0]
+            resultcopy[2] =  result[2]
+            resultcopy[0] =  result[3]
+        };
+        console.log("######", result)
+        console.log(resultcopy)
+       return resultcopy;
+
+    }
+    else if (randomValue < 0){
+        throw new Error('Invalid Random');
+    }
+    else {
+        return result;
+    }
 }
+  
 
 module.exports = {
     pickColor, generateCode, checkCode
