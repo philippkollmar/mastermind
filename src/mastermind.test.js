@@ -1,6 +1,7 @@
 const colors = require('./colors');
-const { pickColor, generateCode, checkCode } = require('./mastermind');
+const { pickColor, generateCode, checkCode, checkGame} = require('./mastermind');
 const hint = require("./hint");
+const game = require("./game");
 
 describe('pickColor', () => {
     it('should take a randomfn and return a color based on that', () => {
@@ -111,3 +112,18 @@ describe('chekCode', () => {
         )).toContain(hint.FITS, hint.PARTIALLY, hint.NOT_AT_ALL)
     })
 });
+
+
+
+
+describe('checkGame', () => {
+    it('should return WON on normal run', () => {
+        expect(checkGame(checkCode(
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
+            (_) => {}
+        ))).toEqual(game.WON)
+    });
+
+
+}) 

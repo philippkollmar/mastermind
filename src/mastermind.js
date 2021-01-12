@@ -1,5 +1,6 @@
-const colors = require("./colors")
-const hint = require("./hint")
+const colors = require("./colors");
+const hint = require("./hint");
+const game = require("./game");
 
 const pickColor = (randomFn) => {
     const randomValue = randomFn();
@@ -65,8 +66,6 @@ const checkCode = (code, guess, randomFn) => {
             resultcopy[2] =  result[2]
             resultcopy[0] =  result[3]
         };
-        console.log("######", result)
-        console.log(resultcopy)
        return resultcopy;
 
     }
@@ -77,8 +76,22 @@ const checkCode = (code, guess, randomFn) => {
         return result;
     }
 }
+
+function checkGame (checkCode) {
+    let progress = checkCode;
+    let win = [hint.FITS, hint.FITS, hint.FITS, hint.FITS]
+    let rounds = 1;
+
+    console.log(progress)
+    console.log(win)
+
+    if(JSON.stringify(progress) === JSON.stringify(win) && rounds <= 12) {
+        return game.WON;
+    }
+    
+}
   
 
 module.exports = {
-    pickColor, generateCode, checkCode
+    pickColor, generateCode, checkCode, checkGame
 }
