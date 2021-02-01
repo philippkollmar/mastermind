@@ -1,7 +1,16 @@
 const colors = require('./colors');
-const { pickColor, generateCode, checkCode, checkGame } = require('./mastermind');
+const { pickColor, generateCode, checkCode, checkGame, randomFn } = require('./mastermind');
 const hint = require("./hint");
 const game = require("./game");
+
+describe ('randomFn', () => {
+    it('should be greater than 0', () => {
+        expect(randomFn()).toBeGreaterThan(0);
+    })
+    it('should be less than 1', () => {
+        expect(randomFn()).toBeLessThan(1);
+    })
+})
 
 describe('pickColor', () => {
     it('should take a randomfn and return a color based on that', () => {

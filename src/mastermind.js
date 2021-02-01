@@ -2,6 +2,10 @@ const colors = require("./colors");
 const hint = require("./hint");
 const game = require("./game");
 
+function randomFn() {
+    return Math.random();
+}
+
 const pickColor = (randomFn) => {
     const randomValue = randomFn();
     if (randomValue < 0.125) {
@@ -98,5 +102,5 @@ function checkGame(checkCode, rounds) {
 
 
 module.exports = {
-    pickColor, generateCode, checkCode, checkGame
+    pickColor, generateCode, checkCode, checkGame, randomFn
 }
