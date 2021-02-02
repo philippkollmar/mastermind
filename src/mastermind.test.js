@@ -34,7 +34,7 @@ describe('pickColor', () => {
 
     it('it should throw on function that return more than 1.0', () => {
         expect(() => {
-            pickColor(() => 1.0)
+            pickColor(() => 1.1)
         }).toThrow()
     })
 })
@@ -47,6 +47,7 @@ describe('generateCode', () => {
         };
         expect(generateCode(fakeRandom)).toEqual([colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE])
     });
+
 });
 describe('chekCode', () => {
     it('should turn code and guess into hints when all colors diverge', () => {

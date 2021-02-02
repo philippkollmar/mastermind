@@ -9,30 +9,48 @@ function randomFn() {
 const pickColor = (randomFn) => {
     const randomValue = randomFn();
     if (randomValue < 0.125) {
-        return colors.RED
+        color = colors.RED
     } else if (randomValue >= 0.125 && randomValue < 0.25) {
-        return colors.GREEN
+        color = colors.GREEN
     } else if (randomValue >= 0.25 && randomValue < 0.375) {
-        return colors.YELLOW
+        color = colors.YELLOW
     } else if (randomValue >= 0.375 && randomValue < 0.5) {
-        return colors.BLUE
+        color = colors.BLUE
     } else if (randomValue >= 0.5 && randomValue < 0.625) {
-        return colors.PURPLE
+        color = colors.PURPLE
     } else if (randomValue >= 0.625 && randomValue < 0.75) {
-        return colors.ORANGE
+        color = colors.ORANGE
     } else if (randomValue >= 0.75 && randomValue < 0.875) {
-        return colors.PINK
+        color = colors.PINK
     } else if (randomValue >= 0.875 && randomValue < 1) {
-        return colors.BROWN
+        color = colors.BROWN
+    } else if (randomValue > 1 || randomValue < 0) {
+        throw new Error('Invalid Random')
     }
-    throw new Error('Invalid Random')
-
+    return color;
 }
 
 const generateCode = (randomFn) => {
-    return [1, 2, 3, 4].map((_) => {
-        return pickColor(randomFn)
-    })
+    let color1 = pickColor(randomFn);
+    let color2 = pickColor(randomFn);
+    let color3 = pickColor(randomFn);
+    let color4 = pickColor(randomFn);
+
+    while (color1 === color2 || color1 === color3 || color1 === color4) {
+        color1 = pickColor(randomFn);
+    }
+    while (color2 === color1 || color2 === color3 || color1 === color4) {
+        color2 = pickColor(randomFn);
+    }
+    while (color3 === color1 || color3 === color2 || color3 === color4) {
+        color3 = pickColor(randomFn);
+    }
+    while (color4 === color1 || color4 === color2 || color4 === color3) {
+        color4 === pickColor(randomFn);
+    }
+
+    const code = [color1, color2, color3, color4]
+    return code;
 }
 
 const checkCode = (code, guess, randomFn) => {
