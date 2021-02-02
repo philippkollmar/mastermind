@@ -8,6 +8,7 @@ function randomFn() {
 
 const pickColor = (randomFn) => {
     const randomValue = randomFn();
+    let color;
     if (randomValue < 0.125) {
         color = colors.RED
     } else if (randomValue >= 0.125 && randomValue < 0.25) {
