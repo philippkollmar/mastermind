@@ -40,11 +40,12 @@ describe('pickColor', () => {
 })
 describe('generateCode', () => {
     it('should return 4 colors based on the randomfunction', () => {
-        let count = 0.125;
+        let count = 0;
         const fakeRandom = () => {
-            return count
+            count += 1;
+            return (0.125 - 0.001) * count
         };
-        expect(generateCode(fakeRandom)).toEqual([colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE])
+        expect(generateCode(fakeRandom)).toEqual([colors.RED, colors.YELLOW, colors.PURPLE, colors.ORANGE])
     });
 
 });
