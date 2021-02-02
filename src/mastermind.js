@@ -1,6 +1,7 @@
 const colors = require("./colors");
 const hint = require("./hint");
 const game = require("./game");
+const { BLUE } = require("./colors");
 
 function randomFn() {
     return Math.random();
@@ -8,49 +9,53 @@ function randomFn() {
 
 const pickColor = (randomFn) => {
     const randomValue = randomFn();
-    let color;
+    
     if (randomValue < 0.125) {
-        color = colors.RED
+        return colors.RED
     } else if (randomValue >= 0.125 && randomValue < 0.25) {
-        color = colors.GREEN
+        return colors.GREEN
     } else if (randomValue >= 0.25 && randomValue < 0.375) {
-        color = colors.YELLOW
+        return colors.YELLOW
     } else if (randomValue >= 0.375 && randomValue < 0.5) {
-        color = colors.BLUE
+        return colors.BLUE
     } else if (randomValue >= 0.5 && randomValue < 0.625) {
-        color = colors.PURPLE
+        return colors.PURPLE
     } else if (randomValue >= 0.625 && randomValue < 0.75) {
-        color = colors.ORANGE
+        return colors.ORANGE
     } else if (randomValue >= 0.75 && randomValue < 0.875) {
-        color = colors.PINK
+        return colors.PINK
     } else if (randomValue >= 0.875 && randomValue < 1) {
-        color = colors.BROWN
-    } else if (randomValue > 1 || randomValue < 0) {
-        throw new Error('Invalid Random')
-    }
-    return color;
+        return colors.BROWN
+    } 
+    throw new Error('Invalid Random')
+
 }
 
 const generateCode = (randomFn) => {
-    let color1 = pickColor(randomFn);
-    let color2 = pickColor(randomFn);
-    let color3 = pickColor(randomFn);
-    let color4 = pickColor(randomFn);
+    const colorArray = [
+        colors.RED, 
+        colors.GREEN, 
+        colors.YELLOW, 
+        colors.BLUE, 
+        colors.PURPLE, 
+        colors.ORANGE, 
+        colors.PINK, 
+        colors.BROWN
+    ]
 
-    while (color1 === color2 || color1 === color3 || color1 === color4) {
-        color1 = pickColor(randomFn);
-    }
-    while (color2 === color1 || color2 === color3 || color1 === color4) {
-        color2 = pickColor(randomFn);
-    }
-    while (color3 === color1 || color3 === color2 || color3 === color4) {
-        color3 = pickColor(randomFn);
-    }
-    while (color4 === color1 || color4 === color2 || color4 === color3) {
-        color4 === pickColor(randomFn);
-    }
+    let color1 = colorArray[Math.floor(randomFn()*colorArray.length)]
+    //Array verkleinern und aus neuem Array Farbe picken
+    var filteredArray1 = colorArray.filter(function(e) { return e !== color1 })
+    let color2 = filteredArray1[Math.floor(randomFn()*filteredArray1.length)]
+
+    var filteredArray2 = filteredArray1.filter(function(e) { return e !== color2 })
+    let color3 = filteredArray2[Math.floor(randomFn()*filteredArray2.length)]
+
+    var filteredArray3 = filteredArray2.filter(function(e) { return e !== color3 })
+    let color4 = filteredArray3[Math.floor(randomFn()*filteredArray3.length)]
 
     const code = [color1, color2, color3, color4]
+    console.log(code)
     return code;
 }
 
