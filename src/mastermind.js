@@ -56,7 +56,6 @@ const generateCode = (randomFn) => {
     let color4 = filteredArray3[Math.floor(randomFn()*filteredArray3.length)]
 
     const code = [color1, color2, color3, color4]
-    console.log(code)
     return code;
 }
 
@@ -108,8 +107,8 @@ const checkCode = (code, guess, randomFn) => {
 
 function checkGame(checkCode, rounds) {
     let progress = checkCode;
-    let win = [hint.FITS, hint.FITS, hint.FITS, hint.FITS]
-    console.log(win)
+    let win = [FITS, FITS, FITS, FITS]
+
     if (String(progress) === String(win) && rounds <= 12) {
         return game.WON;
     }
