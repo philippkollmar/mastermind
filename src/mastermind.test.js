@@ -1,6 +1,7 @@
 const colors = require('./colors');
 const { pickColor, generateCode, checkCode, checkGame, randomFn } = require('./mastermind');
 const hint = require("./hint");
+const {FITS, NOT_AT_ALL, PARTIALLY}= require("./hint");
 const game = require("./game");
 
 describe ('randomFn', () => {
@@ -126,21 +127,13 @@ describe('chekCode', () => {
 describe('checkGame', () => {
     it('should return WON on normal run in under 12 rounds', () => {
         let fakeRounds = 1
-        expect(checkGame(checkCode(
-            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
-            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
-            (_) => { }),
-            fakeRounds
+        expect(checkGame([FITS,FITS,FITS,FITS],fakeRounds
         )).toEqual(game.WON)
     });
 
     it("should return LOST when something doesnt fit after round 12", () => {
         let fakeRounds = 12
-        expect(checkGame(checkCode(
-            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
-            [colors.RED, colors.YELLOW, colors.BROWN, colors.GREEN],
-            (_) => { }),
-            fakeRounds
+        expect(checkGame([FITS,PARTIALLY,FITS,NOT_AT_ALL],fakeRounds
         )).toEqual(game.LOST)
     });
 
@@ -166,11 +159,7 @@ describe('checkGame', () => {
 
     it("should return PENDING when round is under 12 and something doesnt fit", () => {
         let fakeRounds = 5
-        expect(checkGame(checkCode(
-            [colors.RED, colors.GREEN, colors.YELLOW, colors.BLUE],
-            [colors.RED, colors.YELLOW, colors.BROWN, colors.GREEN],
-            (_) => { }),
-            fakeRounds
+        expect(checkGame([FITS,PARTIALLY,FITS,FITS],fakeRounds
         )).toEqual(game.PENDING)
     });
 

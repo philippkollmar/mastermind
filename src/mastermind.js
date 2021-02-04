@@ -1,5 +1,6 @@
 const colors = require("./colors");
 const hint = require("./hint");
+const {NOT_AT_ALL, PARTIALLY, FITS} = require("./hint");
 const game = require("./game");
 const { BLUE } = require("./colors");
 
@@ -108,14 +109,14 @@ const checkCode = (code, guess, randomFn) => {
 function checkGame(checkCode, rounds) {
     let progress = checkCode;
     let win = [hint.FITS, hint.FITS, hint.FITS, hint.FITS]
-
-    if (JSON.stringify(progress) === JSON.stringify(win) && rounds <= 12) {
+    console.log(win)
+    if (String(progress) === String(win) && rounds <= 12) {
         return game.WON;
     }
-    else if (progress.includes(hint.NOT_AT_ALL) && rounds >= 12) {
+    else if (String(progress).includes('NOT_AT_ALL') && rounds >= 12) {
         return game.LOST;
     }
-    else if (progress.includes(hint.PARTIALLY) && rounds >= 12) {
+    else if (String(progress).includes('PARTIALLY') && rounds >= 12) {
         return game.LOST;
     }
     else {
